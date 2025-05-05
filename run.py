@@ -1,13 +1,7 @@
-import nbformat
-from nbconvert.preprocessors import ExecutePreprocessor
-
-def run_notebook(path):
-    with open(path) as f:
-        nb = nbformat.read(path, as_version=4)
-        
-    ep = ExecutePreprocessor(timeout=500, kernel_name='python3')
-    ep.preprocess(nb,{'metadata': {'path': './'}})
-
+from scripts.execute_notebook import run_notebook
+from sklearn.feature_extraction.text import TfidfVectorizer
+from data import get_vectorizer
 
 if __name__ == "__main__":
-    run_notebook('scripts/notebook/ContentBasedFiltering.ipynb')
+    
+    run_notebook('scripts/notebook/cleaning_dataset.ipynb')

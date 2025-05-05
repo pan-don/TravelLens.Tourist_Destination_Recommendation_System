@@ -55,11 +55,13 @@ class TextProcessing():
         return lemmatize_text
 
     def tfidf_vectorizer(self, text: str):
-        text_vectorizer = get_vectorizer.transform(text)
+        vectorizer = get_vectorizer()
+        text_vectorizer = vectorizer.transform(text)
         return text_vectorizer        
         
     def cosine_similarity_matrix(self, text: str) -> str:
-        result = cosine_similarity(text, get_tfidf_matrix)[0]
+        tfidf_matrix = get_tfidf_matrix()
+        result = cosine_similarity(text, tfidf_matrix)[0]
         return result
     
     def pipeline(self):
