@@ -8,11 +8,11 @@ def get_dataset():
     return df
     
 def get_vectorizer():
-    with open('data/tfidf_vectorizer.pkl', 'rb') as f:
-        vectorizer = pickle.loads(f)
+    with open('data/vectorizer.pkl', 'rb') as f:
+        vectorizer = pickle.load(f)
         return vectorizer
 
 def get_tfidf_matrix():
     with open('data/tfidf_matrix.pkl', 'rb') as f:
-        tfidf_matrix = pickle.loads(f)
+        tfidf_matrix = pickle.load(f)
         return tfidf_matrix
