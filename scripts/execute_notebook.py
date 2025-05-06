@@ -5,7 +5,7 @@ from nbconvert.preprocessors import ExecutePreprocessor
 def run_notebook(path):
     with open(path) as f:
         nb = nbformat.read(path, as_version=4)
-        
+    
     ep = ExecutePreprocessor(timeout=1200, kernel_name='python3')
     ep.preprocess(nb,{'metadata': {'path': './'}})
     
