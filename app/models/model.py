@@ -1,25 +1,38 @@
-import torch
-from torch import nn
+import pandas as pd
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+from data.data_loader import get_dataset, get_vectorizer, get_tfidf_matrix
 
-class ContentBasedFilteringModel(nn.Module):
-    def __init__(self, input_num: int, input_dim: int, input_rnn: int):
-        self.embedding = nn.Embedding(num_embeddings=input_num, embedding_dim=input_dim)
-        self.rnn = nn.GRU(input_size=input_rnn, hidden_size=input_rnn, num_layers=3, batch_first=True)
-        
-        self.fc1 = nn.Sequential(
-            nn.Linear(input_rnn, input_rnn),
-            nn.ReLU(),
-            nn.Dropout()
-        )
-        
-        self.fc1 = nn.Sequential(
-            nn.Linear(input_rnn, input_rnn),
-            nn.ReLU()
-        )
+
+class ContentBasedFilteringModel():
+    def __init__(self, top_num: int=3, vectorizer: TfidfVectorizer=get_vectorizer(), tfidf_matrix: np.ndarray=get_tfidf_matrix(), input_dataset: pd.DataFrame=get_dataset()):
+        self.top_num = top_num
+        self.vectorizer = vectorizer
+        self.tfidf_matrix = tfidf_matrix
+        self.dataset = input_dataset
     
-    def forward(self, idx):
-        x1 = self.embedding(idx)
-        _, h_n = self.rnn(x1)
-        x3 = self.fc1(h_n.squeeze(dim=0))
-        x4 = self.fc2(x3)
-        return x4
+    def predict(self, input_text: str, input_catg: str, input_city: str):
+        input_tfidf_matrix = self.vectorizer.transform([input_text])
+        cosims = cosine_similarity(input_tfidf_matrix, self.tfidf_matrix)[0]
+        
+        filtered_data = [
+        i for i in range(len(self.dataset['Place_Name']))
+        if self.dataset['Category'][i] == input_catg and
+        self.dataset['City'][i] == input_city
+        ]
+        if filtered_data:
+            filtered_cosims = cosims[filtered_data]
+            sorted_order = np.argsort(filtered_cosims)[::-1][:self.top_num]
+            recommend_idx = [int(filtered_cosims[i]) for i in sorted_order]
+            
+            #     # menyimpan nama, kota, dan kategori destinasi wisata yang direkomendasikan
+            recomendation_dict = {"Name": [], "City": [], "Category": [], "Link Image": []}
+            for i in recommend_idx:
+                recomendation_dict["Name"].append(self.dataset['Place_Name'].iloc[i])
+                recomendation_dict["Category"].append(self.dataset['Category'].iloc[i])
+                recomendation_dict["City"].append(self.dataset['City'].iloc[i])
+                recomendation_dict["Link Image"].append(self.dataset['Link_Image'].iloc[i])
+            return recomendation_dict
+        else:
+            return []
