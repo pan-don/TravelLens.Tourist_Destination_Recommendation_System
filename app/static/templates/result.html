@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelLens Results</title>
+</head>
+<body>
+    <h1>TravelLens Results</h1>
+    {% if results %}
+        <ul>
+        {% for i in range(results['Name']|length) %}
+            <li>
+                <strong>Name:</strong> {{ results['Name'][i] }}<br>
+                <strong>City:</strong> {{ results['City'][i] }}<br>
+                <strong>Category:</strong> {{ results['Category'][i] }}<br>
+                <strong>Link:</strong> <a href="{{ results['Link Image'][i] }}">Image</a><br>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</body>
+</html>
