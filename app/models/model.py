@@ -24,7 +24,7 @@ class ContentBasedFilteringModel():
         if filtered_data:
             filtered_cosims = cosims[filtered_data]
             sorted_order = np.argsort(filtered_cosims)[::-1][:self.top_num]
-            recommend_idx = [int(filtered_cosims[i]) for i in sorted_order]
+            recommend_idx = [filtered_data[i] for i in sorted_order]
             
             #     # menyimpan nama, kota, dan kategori destinasi wisata yang direkomendasikan
             recomendation_dict = {"Name": [], "City": [], "Category": [], "Link Image": []}
