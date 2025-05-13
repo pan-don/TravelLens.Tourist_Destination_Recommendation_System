@@ -2,8 +2,8 @@ from data.data_loader import get_dataset
 from app.models import ContentBasedFilteringModel
 from app.preprocessing import Pipeline
 
-
 df = get_dataset()
+
 # fungsi untuk dekode data category
 def decode_category(idx):
     category_dict = {i: cat for i, cat in enumerate(sorted(df['Category'].unique().tolist()))}

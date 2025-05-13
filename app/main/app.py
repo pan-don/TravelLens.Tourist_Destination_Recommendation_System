@@ -3,10 +3,12 @@ from app.models.recommender import recommender_system
 
 app = Flask(__name__, template_folder='../static/templates')
 
+# Halaman utama
 @app.route('/')
 def index():
     return render_template('index.html')
 
+# Halaman hasil rekomendasi
 @app.route('/result', methods=['POST'])
 def result():
     city = int(request.form['city'])
