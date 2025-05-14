@@ -1,41 +1,44 @@
-import re
-import torch
+import nltk
 from string import punctuation
+from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-<<<<<<< Updated upstream
-from data import get_vocab
-=======
-from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 
->>>>>>> Stashed changes
+
+for resource in ['punkt', 'stopwords']:
+    try:
+        nltk.data.find(f'tokenizers/{resource}' if resource == 'punkt' else f'corpora/{resource}')
+    except LookupError:
+        nltk.download(resource)
+
 
 class Preprocessing():
-    def __init__(self, input_text: str, inference: bool):
+    def __init__(self, input_text: str, language: str='indonesian'):
         self.text = input_text
-        self.inference_mode = inference
+        self.lang = language
         
-    def cleaning_text(self, input_text: str):
-        text_lower = input_text.lower()
-        clean = re.sub(f"[{re.escape(punctuation)}]", '', text_lower)
-        return clean
-
-    def tokenization(self, input_text: str):
-        tokens = word_tokenize(input_text)
-        return tokens
+    def lower_case(self, input_text: str):
+        return input_text.lower()
     
-    def encoding_text(self, input_text: str, len_max: int=10):
-        vocab = get_vocab()
-        tokens = self.tokenization(input_text)
-        idx = [vocab.get(word, _) for word in tokens] # type: ignore
-        padding = idx                                                                       [:len_max]+[0] * (len_max - len(idx))
-        tensor = torch.tensor(padding)
-        return tensor
+    def cleaning_text(self, input_text: str) -> str:
+        clean_text = [char for char in input_text if char not in punctuation]
+        return ''.join(clean_text)
+
+    def remove_stop_words(self, input_text: str, lang: str) -> str:
+        tokens = word_tokenize(input_text)
+        stops = set(stopwords.words(lang))
+        clean_text = [word for word in tokens if not word in stops]
+        clean_text = " ".join(clean_text)
+        return clean_text
     
     def text_pipeline(self):
-        input_text = self.text
-        clean_text = self.cleaning_text(input_text)
-        if not self.inference_mode:
-            tokens = self.tokenization(clean_text)
-            return tokens
-        encoded_text = self.encoding_text(tokens, len_max=10)
-        return encoded_text
+        text1 = self.lower_case(self.text)
+        text2 = self.cleaning_text(text1)
+        text3 = self.remove_stop_words(text2, self.lang)
+        return text3
+
+
+
+def pipeline(input_text: str, lang: str='indonesian') -> str:
+    clean_text = Preprocessing(input_text=input_text, language=lang)
+    result = clean_text.text_pipeline()
+    return result

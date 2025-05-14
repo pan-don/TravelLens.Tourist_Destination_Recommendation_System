@@ -14,4 +14,5 @@ def result():
     desc = request.form['description']
 
     results = recommendation_system(description=desc, category=catg, city=city)
-    return render_template('result.html', results=results)
+    results_dict = results.to_dict(orient='records')
+    return render_template('result.html', results=results_dict)
