@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelLens</title>
+</head>
+<body>
+    <h1>TravelLens</h1>
+    <form action="/result" method="post">
+        <label for="city">City</label>
+        <select name="city" id="city">
+            <option value="Bandung">Bandung</option>
+            <option value="Jakarta">Jakarta</option>
+            <option value="Semarang">Semarang</option>
+            <option value="Surabaya">Surabaya</option>
+            <option value="Yogyakarta">Yogyakarta</option>
+        </select>
+        <br>
+        <label for="category">Category</label>
+        <select name="category" id="category">
+            <option value="Bahari">Bahari</option>
+            <option value="Budaya">Budaya</option>
+            <option value="Cagar Alam">Cagar Alam</option>
+            <option value="Pusat Perbelanjaan">Pusat Perbelanjaan</option>
+            <option value="Taman Hiburan">Taman Hiburan</option>
+            <option value="Tempat Ibadah">Tempat Ibadah</option>
+        </select>
+        <br>
+        <label for="description">Description</label>
+        <textarea name="description" id="description" rows="4" cols="50"></textarea>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
