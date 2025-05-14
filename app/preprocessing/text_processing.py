@@ -2,7 +2,12 @@ import re
 import torch
 from string import punctuation
 from nltk.tokenize import word_tokenize
+<<<<<<< Updated upstream
 from data import get_vocab
+=======
+from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+
+>>>>>>> Stashed changes
 
 class Preprocessing():
     def __init__(self, input_text: str, inference: bool):
