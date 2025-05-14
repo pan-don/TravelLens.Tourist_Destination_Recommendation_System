@@ -9,7 +9,7 @@
     <h1>TravelLens Results</h1>
     {% if not results.empty %}
         <ul>
-        {% for row in result %}
+        {% for row in results %}
             <li>
                 <strong>Name:</strong> {{ row['Place_Name'] }}<br>
                 <strong>City:</strong> {{ row['City'] }}<br>
