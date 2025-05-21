@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from app.models.inference import recommendation_system
+from ..models.inference import recommendation_system
 
 app = Flask(__name__, static_folder='../static', template_folder='../static/templates')
 
