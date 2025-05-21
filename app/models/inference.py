@@ -55,6 +55,7 @@ def recommendation_system(description: str,
 
     # Ambil top-n berdasarkan similarity tertinggi
     top_similarity_idx = np.argsort(similarity)[::-1][:top_n]
+    
     # Ambil baris dari df_filtered sesuai indeks top similarity
     df_recommendations = df_filtered.iloc[top_similarity_idx].copy()
     return df_recommendations
