@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request
 from app.models.inference import recommendation_system
 
-# Inisialisasi Flask app dan atur folder template
-app = Flask(__name__, template_folder='../static/templates')
+app = Flask(__name__, static_folder='../static', template_folder='../static/templates')
 
 
 @app.route('/')
@@ -18,7 +17,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/result', methods=['POST'])
+@app.route('/result', methods=['GET', 'POST'])
 def result():
     """
     Fungsi untuk memproses data input dari form HTML dan menghasilkan hasil rekomendasi.
@@ -44,6 +43,10 @@ def result():
     render_template : str
         Mengembalikan file HTML 'result.html' beserta hasil rekomendasi.
     """
+    if request.method == 'GET':
+        # Redirect to the home page or show an error message for GET requests
+        return render_template('index.html', error="Please submit the form to get recommendations.")
+
     # Ambil data dari form HTML
     city = str(request.form['city'])          # Nama kota dari input user
     catg = str(request.form['category'])      # Kategori destinasi dari input user

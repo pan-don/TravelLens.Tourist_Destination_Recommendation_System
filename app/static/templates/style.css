@@ -1,0 +1,257 @@
+.navbar {
+    background: transparent;
+    box-shadow: none;
+}
+.navbar ul {
+    background: rgba(30, 41, 59, 0.35); /* dark blue with opacity */
+    color: #fff;
+    border-radius: 9999px;
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
+    backdrop-filter: blur(8px);
+}
+.nav-link {
+    position: relative;
+    padding-bottom: 2px;
+    color: #fff;
+    transition: color 0.3s;
+}
+.nav-link::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #fff;
+    transition: width 0.3s;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+.nav-link:hover {
+    color: #bfdbfe; /* Tailwind blue-200 */
+}
+.nav-link:hover::after {
+    width: 100%;
+    background: #bfdbfe;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 20px;
+    font-size: 15px;
+}
+html {
+    margin: 0;
+    padding: 0;
+    background-color: #dedede;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #f9fafb; /* Light gray background */
+    color: #1f2937; /* Dark gray text */
+}
+.layar-dalam {
+    width: 1000px;
+    margin: auto;
+}
+.layar-penuh {
+    width: 100%;
+}
+nav {
+    z-index: 100;
+    color: #fff;
+    text-align: center;
+    position: fixed;
+    border-bottom: 1px solid #b1b1b1;
+    line-height: 60px;
+    width: 100%;
+    background-color: #ffffff; /* White background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+nav.putih {
+    background-color: #fff;  
+}
+nav .logo {
+    float: left;
+    position: relative;
+    line-height: 55px;
+    text-align: center;
+}
+nav .logo img {
+    vertical-align: middle;
+    width: 120px;
+}
+
+nav .menu {
+    float: right;
+    height: 60px;
+    max-width: 600px;
+}
+
+nav .menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav .menu ul li {
+    list-style-type: none;
+    float: left;
+    line-height: 60px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-align: center;
+    padding: 0px 16px 0px 16px;
+    text-decoration: none;
+}
+nav a {
+    color: #1f2937; /* Dark gray text */
+    text-decoration: none;
+    font-weight: 500;
+}
+nav ul li a:hover {
+    text-decoration: underline;
+}
+nav a:hover {
+    color: #2563eb; /* Blue on hover */
+}
+
+/* pengaturan header */
+
+header {
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    height: 100vh;
+}
+
+header .intro {
+    z-index: 100;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    top: 50%;
+}
+header .intro h3 {
+    font-size: 50px;
+    margin: 0;
+    padding: 0;
+}
+
+.background-slider {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.hero-image-slide {
+    flex-shrink: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    object-position: center;
+}
+
+.tombol {
+    background-color: #c86b85;
+    height: 40px;
+    line-height: 42px;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0px 20px 0px 20px;
+    font-size: 15px;
+    border-radius: 4px;
+}
+header .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #000;
+    opacity: 50%;
+    z-index: -1;
+}
+.tombol-menu {
+    position: absolute;
+    top: 1.7rem;
+    right: 1rem;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+}
+.tombol-menu .garis {
+    height: 3px;
+    background-color: #fff;
+}
+@media screen and (max-width: 991.98px) {
+    .layar-dalam {
+        width: 90%;
+    }
+    nav .menu ul{
+        display: none;
+    }
+    .tombol-menu {
+        display: flex;
+    }
+}
+
+/* About Us Section */
+#aboutus {
+    padding: 4rem 1rem;
+    text-align: center;
+}
+#aboutus h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+#aboutus p {
+    font-size: 1.125rem;
+    color: #6b7280; /* Gray text */
+}
+
+/* Contact Section */
+#contact {
+    padding: 4rem 1rem;
+    background-color: #f3f4f6; /* Light gray background */
+    text-align: center;
+}
+#contact form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+#contact input, #contact textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #d1d5db; /* Light gray border */
+    border-radius: 0.5rem;
+}
+#contact button {
+    background-color: #2563eb; /* Blue button */
+    color: #ffffff; /* White text */
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+#contact button:hover {
+    background-color: #1d4ed8; /* Darker blue on hover */
+}
+
+/* Footer */
+footer {
+    background-color: #1f2937; /* Dark gray background */
+    color: #ffffff; /* White text */
+    text-align: center;
+    padding: 1.5rem 1rem;
+}
+
+
