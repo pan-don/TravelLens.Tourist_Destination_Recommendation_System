@@ -53,10 +53,16 @@ def result():
     desc = request.form['description']        # Deskripsi destinasi dari input user
 
     # Proses rekomendasi berdasarkan input pengguna
-    results = recommendation_system(description=desc, category=catg, city=city)
-
+    results = recommendation_system(
+        description=desc, 
+        category=catg, 
+        city=city)
+    
+    # Cek apakah hasil rekomendasi kosong
+    if results is None:
+        return render_template('result.html', results=False)
+    
     # Konversi hasil DataFrame menjadi list of dict agar mudah digunakan di HTML
     results_dict = results.to_dict(orient='records')
-
     # Tampilkan halaman hasil dengan data rekomendasi
     return render_template('result.html', results=results_dict)

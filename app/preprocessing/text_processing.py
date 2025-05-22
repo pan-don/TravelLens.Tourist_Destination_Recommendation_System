@@ -1,14 +1,30 @@
 import nltk
+import logging
 from string import punctuation
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
+
+
+# Konfigurasi logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
+
 # Mengecek dan mengunduh resource NLTK yang diperlukan jika belum tersedia
-for resource in ['punkt', 'stopwords', 'punkt_tab']:
-    try:
-        nltk.data.find(f'tokenizers/{resource}' if resource == 'punkt' else f'corpora/{resource}')
-    except LookupError:
-        nltk.download(resource)
+def nltk_resources():
+    resources = ['punkt', 'stopwords', 'punkt_tab']
+    for resource in resources:
+        try:
+            nltk.data.find(f'tokenizers/{resource}' if resource == 'punkt' else f'corpora/{resource}')
+        except LookupError:
+            logger.info(f"Downloading NLTK resource: {resource}")
+            nltk.download(resource)
+
+# inisialisasi resource NLTK
+nltk_resources()
+
 
 
 class Preprocessing():
@@ -66,7 +82,7 @@ class Preprocessing():
             Teks tanpa tanda baca.
         """
         clean_text = [char for char in input_text if char not in punctuation]
-        return ''.join(clean_text)
+        return "".join(clean_text)
 
     def remove_stop_words(self, input_text: str, lang: str) -> str:
         """
@@ -84,10 +100,13 @@ class Preprocessing():
         str
             Teks setelah stopwords dihapus.
         """
-        tokens = word_tokenize(input_text)
-        stops = set(stopwords.words(lang))
-        clean_text = [word for word in tokens if word not in stops]
-        return " ".join(clean_text)
+        try:
+            tokens = word_tokenize(input_text)
+            stops = set(stopwords.words(lang))
+            clean_text = [word for word in tokens if word not in stops]
+            return " ".join(clean_text)
+        except Exception as e:
+            raise ValueError(f"Error in removing stop words: {e}")
 
     def text_pipeline(self) -> str:
         """
@@ -121,6 +140,9 @@ def pipeline(input_text: str, lang: str='indonesian') -> str:
     str
         Teks hasil praproses (lowercase, bersih tanda baca, tanpa stopwords).
     """
-    clean_text = Preprocessing(input_text=input_text, language=lang)
-    result = clean_text.text_pipeline()
-    return result
+    try:
+        clean_text = Preprocessing(input_text=input_text, language=lang)
+        result = clean_text.text_pipeline()
+        return result
+    except Exception as e:
+        raise RuntimeError(f"Error in text preprocessing: {e}")
