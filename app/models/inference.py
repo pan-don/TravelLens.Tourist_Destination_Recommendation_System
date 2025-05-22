@@ -36,26 +36,29 @@ def recommendation_system(description: str,
     pd.DataFrame
         DataFrame yang berisi top_n rekomendasi destinasi wisata.
     """
+    try:
+        # Filter data sesuai kategori dan kota
+        df_filtered = get_filtered_df(df, category, city)
     
-    # Filter data sesuai kategori dan kota
-    df_filtered = get_filtered_df(df, category, city)
-    if df_filtered.empty:
-        print("No data found for the given category and city.")
-        return df_filtered
+        # Cek apakah df_filtered dan description kosong
+        if df_filtered.empty or description == "":
+            return None
 
-    # preprocessing input data deskripsi
-    cleaned_text = pipeline(description)
+        # preprocessing input data deskripsi
+        cleaned_text = pipeline(description)
     
-    # merepresentasikan input dan filtered data kedalam bentuk vektor supaya dapat dibaca model
-    input_embeddings = get_average_embeddings(cleaned_text, model)
-    filtered_embeddings = get_average_embeddings(df_filtered['Cleaned'], model)
+        # merepresentasikan input dan filtered data kedalam bentuk vektor supaya dapat dibaca model
+        input_embeddings = get_average_embeddings(cleaned_text, model)
+        filtered_embeddings = get_average_embeddings(df_filtered['Cleaned'], model)
 
-    # Hitung similarity antara input dan filtered data
-    similarity = model.wv.cosine_similarities(input_embeddings.flatten(), filtered_embeddings)
+        # Hitung similarity antara input dan filtered data
+        similarity = model.wv.cosine_similarities(input_embeddings.flatten(), filtered_embeddings)
 
-    # Ambil top-n berdasarkan similarity tertinggi
-    top_similarity_idx = np.argsort(similarity)[::-1][:top_n]
+        # Ambil top-n berdasarkan similarity tertinggi
+        top_similarity_idx = np.argsort(similarity)[::-1][:top_n]
     
-    # Ambil baris dari df_filtered sesuai indeks top similarity
-    df_recommendations = df_filtered.iloc[top_similarity_idx].copy()
-    return df_recommendations
+        # Ambil baris dari df_filtered sesuai indeks top similarity
+        df_recommendations = df_filtered.iloc[top_similarity_idx].copy()
+        return df_recommendations
+    except Exception as e:
+        raise RuntimeError(f"Error when generating recommendations: {e}")

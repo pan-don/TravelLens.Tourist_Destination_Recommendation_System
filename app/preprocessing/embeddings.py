@@ -25,20 +25,25 @@ def get_average_embeddings(texts: list[str],
     if isinstance(texts, str):
         texts = [texts]
     
-    # Menyimpan rata-rata embedding untuk setiap teks
-    avg_embeddings = []
+    # inisialisasi model Word2Vec 
     word_vector = model.wv
     vector_size = word_vector.vector_size
     
+    # Menyimpan rata-rata embedding untuk setiap teks
+    avg_embeddings = []
     # Menghitung rata-rata embedding untuk setiap teks
     for text in texts:
-        tokens = word_tokenize(text)
-        valid_tokens = [token for token in tokens if token in word_vector]
-        # Mengecek apakah token tersebut ada dalam model Word2Vec
-        # Jika tidak ada, maka token tersebut diabaikan
-        if valid_tokens:
-            matrix = np.vstack([word_vector[w] for w in valid_tokens])
-            avg_embeddings.append(matrix.mean(axis=0))
-        else:
-            avg_embeddings.append(np.zeros(vector_size))
+        try:
+            tokens = word_tokenize(text)
+            valid_tokens = [token for token in tokens if token in word_vector]
+            # Mengecek apakah token tersebut ada dalam model Word2Vec
+            # Jika tidak ada, maka token tersebut diabaikan
+            if valid_tokens:
+                matrix = np.vstack([word_vector[w] for w in valid_tokens])
+                avg_embeddings.append(matrix.mean(axis=0))
+            else:
+                avg_embeddings.append(np.zeros(vector_size))
+        except Exception as e:
+            raise ValueError(f"Error in calculating average embeddings: {e}")
+    
     return np.vstack(avg_embeddings)
