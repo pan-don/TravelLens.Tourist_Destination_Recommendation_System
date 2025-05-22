@@ -1,5 +1,0 @@
-pip install pytorch
-
-format penulisan:
-folder, file, variable, function = snake_case (example: "model_training.py", "rekomendasi_wisata()")
-class = PascalCase (example: "ModelClassification()")

@@ -1,7 +1,5 @@
-from .model import ContentBasedFilteringModel
-from .recommender import recommender_system
+from .inference import recommendation_system
 
 __all__ = [
-    'ContentBasedFilteringModel',
-    'recommender_system'
+    'recommendation_system',
 ]

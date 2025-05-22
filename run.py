@@ -1,6 +1,4 @@
-from scripts.execute_notebook import run_notebook
-from app.main import halaman
+from app.main.app import app
 
-if __name__ == "__main__":
-    halaman()
-    # run_notebook('scripts/notebook/training_model.ipynb')
+if __name__ == '__main__':
+    app.run(debug=True)

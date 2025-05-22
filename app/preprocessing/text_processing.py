@@ -1,58 +1,148 @@
 import nltk
-import numpy as np
-from nltk.data import find
+import logging
+from string import punctuation
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-from sklearn.metrics.pairwise import cosine_similarity
-from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
-from data.data_loader import get_vectorizer, get_tfidf_matrix
+
+
+
+# Konfigurasi logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
+
+# Mengecek dan mengunduh resource NLTK yang diperlukan jika belum tersedia
+def nltk_resources():
+    resources = ['punkt', 'stopwords', 'punkt_tab']
+    for resource in resources:
+        try:
+            nltk.data.find(f'tokenizers/{resource}' if resource == 'punkt' else f'corpora/{resource}')
+        except LookupError:
+            logger.info(f"Downloading NLTK resource: {resource}")
+            nltk.download(resource)
+
+# inisialisasi resource NLTK
+nltk_resources()
+
 
 
 class Preprocessing():
     """
-    Preprocessing data teks seperti normalisasi, tokenisasi, konversi teks ke vektor, dan pipeline seluruh preprocessing data.
+    Kelas untuk melakukan praproses teks deskripsi wisata seperti 
+    normalisasi huruf, pembersihan tanda baca, dan penghapusan stopwords.
+
+    Parameters
+    ----------
+    input_text : str
+        Teks deskripsi yang ingin diproses.
+    language : str, optional
+        Bahasa stopwords yang digunakan (default 'indonesian').
+
+    Attributes
+    ----------
+    text : str
+        Teks input yang akan diproses.
+    lang : str
+        Bahasa untuk stopwords.
     """
 
-    def __init__(self, input_text: str, lang: str):
+    def __init__(self, input_text: str, language: str='indonesian'):
         self.text = input_text
-        self.lang = lang
-        self.check_nltk_resource('data/lemmatize/wordnet')
-        self.check_nltk_resource('data/corpora/stopwords')
-        self.check_nltk_resource('data/tokenizers/punkt')
-    
-    @staticmethod
-    def check_nltk_resource(path) -> str:
+        self.lang = language
+
+    def lower_case(self, input_text: str) -> str:
+        """
+        Mengubah semua huruf menjadi huruf kecil.
+
+        Parameters
+        ----------
+        input_text : str
+            Teks input.
+
+        Returns
+        -------
+        str
+            Teks dalam huruf kecil.
+        """
+        return input_text.lower()
+
+    def cleaning_text(self, input_text: str) -> str:
+        """
+        Menghapus semua tanda baca dari teks.
+
+        Parameters
+        ----------
+        input_text : str
+            Teks input.
+
+        Returns
+        -------
+        str
+            Teks tanpa tanda baca.
+        """
+        clean_text = [char for char in input_text if char not in punctuation]
+        return "".join(clean_text)
+
+    def remove_stop_words(self, input_text: str, lang: str) -> str:
+        """
+        Menghapus kata-kata umum (stopwords) dari teks.
+
+        Parameters
+        ----------
+        input_text : str
+            Teks input yang sudah dibersihkan.
+        lang : str
+            Bahasa stopwords.
+
+        Returns
+        -------
+        str
+            Teks setelah stopwords dihapus.
+        """
         try:
-            find(path)
-        except:
-            nltk.download(path.split('/')[-1])
+            tokens = word_tokenize(input_text)
+            stops = set(stopwords.words(lang))
+            clean_text = [word for word in tokens if word not in stops]
+            return " ".join(clean_text)
+        except Exception as e:
+            raise ValueError(f"Error in removing stop words: {e}")
 
-    def lower_case(self, text: str) -> str:
-        return text.lower()
+    def text_pipeline(self) -> str:
+        """
+        Pipeline lengkap untuk memproses teks dari huruf kecil, 
+        pembersihan tanda baca, hingga menghapus stopwords.
 
-    def tokenization(self, text: str) -> list[str]:
-        return word_tokenize(text)
-    
-    def remove_stop_word(self, text: str, lang: str) -> str:
-        stop_words = set(stopwords.words(lang))
-        tokens = self.tokenization(text)
-        clean_words = [
-            token for token in tokens 
-            if token.isalnum() and token not in stop_words
-        ]
-        clean_text = ' '.join(clean_words)
-        return clean_text
+        Returns
+        -------
+        str
+            Teks yang telah diproses secara menyeluruh.
+        """
+        text1 = self.lower_case(self.text)
+        text2 = self.cleaning_text(text1)
+        text3 = self.remove_stop_words(text2, self.lang)
+        return text3
 
-    def stemming(self, text: str) -> str:
-        tokens = self.tokenization(text)
-        factory = StemmerFactory()
-        stemmer = factory.create_stemmer()
-        stem_words = [stemmer.stem(token) for token in tokens]
-        stem_text = ' '.join(stem_words)
-        return stem_text
-    
-    def pipeline(self):
-        text = self.text
-        stopwords_text = self.remove_stop_word(text, lang=self.lang)
-        clean_text = self.stemming(stopwords_text)
-        return clean_text
+
+def pipeline(input_text: str, lang: str='indonesian') -> str:
+    """
+    Fungsi pembungkus untuk memproses teks menggunakan class Preprocessing.
+
+    Parameters
+    ----------
+    input_text : str
+        Teks deskripsi yang ingin diproses.
+    lang : str, optional
+        Bahasa stopwords yang digunakan (default 'indonesian').
+
+    Returns
+    -------
+    str
+        Teks hasil praproses (lowercase, bersih tanda baca, tanpa stopwords).
+    """
+    try:
+        clean_text = Preprocessing(input_text=input_text, language=lang)
+        result = clean_text.text_pipeline()
+        return result
+    except Exception as e:
+        raise RuntimeError(f"Error in text preprocessing: {e}")

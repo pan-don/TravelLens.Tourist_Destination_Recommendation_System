@@ -1,9 +1,7 @@
-from .data_loader import get_dataset
-from .data_loader import get_tfidf_matrix
-from .data_loader import get_vectorizer
+from .loader import get_dataset
+from .loader import get_pretrained_model
 
 __all__ = [
     'get_dataset',
-    'get_tfidf_matrix',
-    'get_vectorizer'
+    'get_pretrained_model',
 ]
