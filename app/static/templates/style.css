@@ -1,23 +1,26 @@
 /*
-    Navigasi utama yang menampilkan logo dan menu navigasi utama.
-    Berisi pengaturan latar belakang transparan dan efek blur.
-
+    ================================
+    BAGIAN NAVIGASI UTAMA
+    ================================
+    Navigasi utama yang menampilkan logo di kiri dan menu navigasi di kanan.
+    Menu memiliki latar belakang transparan dan efek blur untuk tampilan modern.
+    
     Komponen:
     ----------
-    .navbar : Container utama navbar.
-    .navbar ul : Menu navigasi dengan latar blur.
-    .nav-link : Link dalam navbar dengan efek hover.
+    .navbar        : Container utama navbar.
+    .navbar ul     : Daftar menu dengan background semi-transparan dan blur.
+    .nav-link      : Tautan dalam menu navbar dengan efek underline saat hover.
 */
 .navbar {
     background: transparent;
     box-shadow: none;
 }
 .navbar ul {
-    background: rgba(30, 41, 59, 0.35);
+    background: rgba(30, 41, 59, 0.35); /* Warna biru gelap transparan */
     color: #fff;
-    border-radius: 9999px;
+    border-radius: 9999px; /* Membulat penuh */
     box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px); /* Efek blur latar belakang */
 }
 .nav-link {
     position: relative;
@@ -37,7 +40,7 @@
     bottom: 0;
 }
 .nav-link:hover {
-    color: #bfdbfe;
+    color: #bfdbfe; /* Warna hover */
 }
 .nav-link:hover::after {
     width: 100%;
@@ -45,13 +48,16 @@
 }
 
 /*
-    Pengaturan umum seluruh halaman.
+    ================================
+    PENGATURAN UMUM HALAMAN
+    ================================
+    Pengaturan dasar untuk font, ukuran teks, margin, padding, dan warna latar belakang.
 
     Komponen:
     ----------
-    *        : Font dan ukuran default.
-    html     : Margin dan latar dasar halaman.
-    body     : Warna latar dan warna teks global.
+    *      : Font default dan line-height seluruh elemen.
+    html   : Reset margin dan padding, serta warna dasar latar.
+    body   : Warna latar utama, font, dan warna teks default halaman.
 */
 * {
     font-family: Arial, Helvetica, sans-serif;
@@ -72,12 +78,15 @@ body {
 }
 
 /*
-    Layout dasar untuk kontainer utama.
+    ================================
+    LAYOUT KONTEN UTAMA
+    ================================
+    Mengatur lebar konten agar tetap proporsional di tengah halaman atau penuh jika diperlukan.
 
     Komponen:
     ----------
-    .layar-dalam : Lebar tetap 1000px untuk konten utama.
-    .layar-penuh : Lebar penuh untuk elemen yang membutuhkan 100%.
+    .layar-dalam  : Container dengan lebar tetap 1000px, digunakan untuk isi utama.
+    .layar-penuh  : Container full width untuk elemen yang membutuhkan lebar 100%.
 */
 .layar-dalam {
     width: 1000px;
@@ -88,15 +97,18 @@ body {
 }
 
 /*
-    Navigasi dan menu responsif tetap di atas layar.
+    ================================
+    NAVIGASI FIXED DAN RESPONSIF
+    ================================
+    Navigasi yang tetap di atas saat scroll, dengan versi putih dan logo kiri + menu kanan.
 
     Komponen:
     ----------
-    nav          : Navigasi fix-top dengan shadow.
-    nav.putih    : Navigasi versi putih.
-    nav .logo    : Logo pada kiri navbar.
-    nav .menu    : Menu navigasi kanan.
-    nav ul li a  : Tautan menu dan efek hover.
+    nav             : Navigasi fix-top, dengan warna latar putih dan shadow.
+    nav.putih       : Variasi warna navigasi putih.
+    nav .logo       : Logo di sisi kiri navigasi.
+    nav .menu       : Menu tautan di sisi kanan.
+    nav ul li a     : Link menu dengan efek hover underline.
 */
 nav {
     z-index: 100;
@@ -157,15 +169,17 @@ nav a:hover {
 }
 
 /*
-    Header bagian atas website yang memuat gambar latar besar 
-    dan teks sambutan pengguna.
+    ================================
+    HEADER / HERO SECTION
+    ================================
+    Bagian atas halaman dengan gambar latar penuh dan teks sambutan di tengah layar.
 
     Komponen:
     ----------
-    header           : Container tinggi layar penuh.
-    header .intro    : Teks sambutan di tengah layar.
-    .background-slider : Gambar latar yang bisa diganti otomatis.
-    .hero-image-slide : Gambar yang memenuhi header.
+    header              : Container tinggi satu layar penuh dengan gambar latar.
+    header .intro       : Teks sambutan pengguna (centered vertically).
+    .background-slider  : Slideshow background (jika ada).
+    .hero-image-slide   : Gambar yang mengisi latar header sepenuhnya.
 */
 header {
     background-size: cover;
@@ -200,13 +214,16 @@ header .intro h3 {
 }
 
 /*
-    Tombol call-to-action dan menu toggle pada mode mobile.
+    ================================
+    TOMBOL & OVERLAY HEADER
+    ================================
+    Tombol call-to-action (CTA) dan overlay gelap pada header untuk meningkatkan kontras teks.
 
     Komponen:
     ----------
-    .tombol         : Tombol umum (e.g., "Mulai", "Selengkapnya").
-    .tombol-menu    : Tombol hamburger menu untuk mobile.
-    .overlay        : Lapis gelap transparan untuk efek fokus header.
+    .tombol         : Tombol bergaya dengan warna khas dan rounded.
+    .tombol-menu    : Tombol hamburger menu untuk tampilan mobile.
+    .overlay        : Latar hitam transparan agar teks lebih terbaca di atas gambar.
 */
 .tombol {
     background-color: #c86b85;
@@ -244,13 +261,16 @@ header .overlay {
 }
 
 /*
-    Responsif untuk perangkat berukuran kecil.
+    ================================
+    RESPONSIF UNTUK LAYAR KECIL
+    ================================
+    Penyesuaian tampilan untuk perangkat mobile / tablet.
 
     Komponen:
     ----------
-    layar-dalam     : Lebar konten dikurangi.
-    nav .menu ul    : Menu disembunyikan pada ukuran kecil.
-    tombol-menu     : Muncul pada tampilan kecil.
+    .layar-dalam      : Lebar konten diperkecil agar tidak overflow layar kecil.
+    nav .menu ul      : Menu disembunyikan, digantikan tombol hamburger.
+    .tombol-menu      : Muncul sebagai icon navigasi saat layar sempit.
 */
 @media screen and (max-width: 991.98px) {
     .layar-dalam {
@@ -265,13 +285,16 @@ header .overlay {
 }
 
 /*
-    Bagian Tentang Kami yang menjelaskan informasi aplikasi/website.
+    ================================
+    SECTION TENTANG KAMI
+    ================================
+    Informasi tentang aplikasi/website dengan teks terpusat.
 
     Komponen:
     ----------
-    #aboutus    : Kontainer section.
-    h2          : Judul section.
-    p           : Deskripsi teks.
+    #aboutus    : Container section tentang kami.
+    h2          : Judul utama section.
+    p           : Paragraf penjelas tentang website/aplikasi.
 */
 #aboutus {
     padding: 4rem 1rem;
@@ -288,13 +311,16 @@ header .overlay {
 }
 
 /*
-    Formulir Kontak untuk pengguna mengirim pesan atau pertanyaan.
+    ================================
+    FORMULIR KONTAK
+    ================================
+    Area formulir bagi pengguna untuk mengirim pesan atau pertanyaan.
 
     Komponen:
     ----------
-    #contact          : Kontainer section.
-    input, textarea   : Input user.
-    button            : Tombol kirim form.
+    #contact             : Container section kontak.
+    input, textarea      : Kolom input teks dan area pesan.
+    button               : Tombol kirim formulir.
 */
 #contact {
     padding: 4rem 1rem;
@@ -325,11 +351,14 @@ header .overlay {
 }
 
 /*
-    Footer halaman yang berisi informasi hak cipta.
+    ================================
+    FOOTER HALAMAN
+    ================================
+    Bagian bawah halaman untuk hak cipta atau informasi penutup.
 
     Komponen:
     ----------
-    footer    : Container footer dengan latar gelap dan teks putih.
+    footer    : Container footer dengan latar gelap dan teks terang.
 */
 footer {
     background-color: #1f2937;
