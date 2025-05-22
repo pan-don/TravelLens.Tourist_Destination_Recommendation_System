@@ -1,9 +1,19 @@
+/*
+    Navigasi utama yang menampilkan logo dan menu navigasi utama.
+    Berisi pengaturan latar belakang transparan dan efek blur.
+
+    Komponen:
+    ----------
+    .navbar : Container utama navbar.
+    .navbar ul : Menu navigasi dengan latar blur.
+    .nav-link : Link dalam navbar dengan efek hover.
+*/
 .navbar {
     background: transparent;
     box-shadow: none;
 }
 .navbar ul {
-    background: rgba(30, 41, 59, 0.35); /* dark blue with opacity */
+    background: rgba(30, 41, 59, 0.35);
     color: #fff;
     border-radius: 9999px;
     box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
@@ -27,13 +37,22 @@
     bottom: 0;
 }
 .nav-link:hover {
-    color: #bfdbfe; /* Tailwind blue-200 */
+    color: #bfdbfe;
 }
 .nav-link:hover::after {
     width: 100%;
     background: #bfdbfe;
 }
 
+/*
+    Pengaturan umum seluruh halaman.
+
+    Komponen:
+    ----------
+    *        : Font dan ukuran default.
+    html     : Margin dan latar dasar halaman.
+    body     : Warna latar dan warna teks global.
+*/
 * {
     font-family: Arial, Helvetica, sans-serif;
     line-height: 20px;
@@ -48,9 +67,18 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Inter', sans-serif;
-    background-color: #f9fafb; /* Light gray background */
-    color: #1f2937; /* Dark gray text */
+    background-color: #f9fafb;
+    color: #1f2937;
 }
+
+/*
+    Layout dasar untuk kontainer utama.
+
+    Komponen:
+    ----------
+    .layar-dalam : Lebar tetap 1000px untuk konten utama.
+    .layar-penuh : Lebar penuh untuk elemen yang membutuhkan 100%.
+*/
 .layar-dalam {
     width: 1000px;
     margin: auto;
@@ -58,6 +86,18 @@ body {
 .layar-penuh {
     width: 100%;
 }
+
+/*
+    Navigasi dan menu responsif tetap di atas layar.
+
+    Komponen:
+    ----------
+    nav          : Navigasi fix-top dengan shadow.
+    nav.putih    : Navigasi versi putih.
+    nav .logo    : Logo pada kiri navbar.
+    nav .menu    : Menu navigasi kanan.
+    nav ul li a  : Tautan menu dan efek hover.
+*/
 nav {
     z-index: 100;
     color: #fff;
@@ -66,8 +106,8 @@ nav {
     border-bottom: 1px solid #b1b1b1;
     line-height: 60px;
     width: 100%;
-    background-color: #ffffff; /* White background */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 nav.putih {
     background-color: #fff;  
@@ -82,34 +122,30 @@ nav .logo img {
     vertical-align: middle;
     width: 120px;
 }
-
 nav .menu {
     float: right;
     height: 60px;
     max-width: 600px;
 }
-
 nav .menu ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     display: flex;
 }
-
 nav .menu ul li {
     list-style-type: none;
     float: left;
     line-height: 60px;
 }
-
 nav ul li a {
     color: #fff;
     text-align: center;
-    padding: 0px 16px 0px 16px;
+    padding: 0px 16px;
     text-decoration: none;
 }
 nav a {
-    color: #1f2937; /* Dark gray text */
+    color: #1f2937;
     text-decoration: none;
     font-weight: 500;
 }
@@ -117,18 +153,26 @@ nav ul li a:hover {
     text-decoration: underline;
 }
 nav a:hover {
-    color: #2563eb; /* Blue on hover */
+    color: #2563eb;
 }
 
-/* pengaturan header */
+/*
+    Header bagian atas website yang memuat gambar latar besar 
+    dan teks sambutan pengguna.
 
+    Komponen:
+    ----------
+    header           : Container tinggi layar penuh.
+    header .intro    : Teks sambutan di tengah layar.
+    .background-slider : Gambar latar yang bisa diganti otomatis.
+    .hero-image-slide : Gambar yang memenuhi header.
+*/
 header {
     background-size: cover;
     background-position: center;
     position: relative;
     height: 100vh;
 }
-
 header .intro {
     z-index: 100;
     color: #fff;
@@ -141,14 +185,12 @@ header .intro h3 {
     margin: 0;
     padding: 0;
 }
-
 .background-slider {
     display: flex;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
 }
-
 .hero-image-slide {
     flex-shrink: 0;
     width: 100vw;
@@ -157,6 +199,15 @@ header .intro h3 {
     object-position: center;
 }
 
+/*
+    Tombol call-to-action dan menu toggle pada mode mobile.
+
+    Komponen:
+    ----------
+    .tombol         : Tombol umum (e.g., "Mulai", "Selengkapnya").
+    .tombol-menu    : Tombol hamburger menu untuk mobile.
+    .overlay        : Lapis gelap transparan untuk efek fokus header.
+*/
 .tombol {
     background-color: #c86b85;
     height: 40px;
@@ -164,7 +215,7 @@ header .intro h3 {
     color: #fff;
     text-decoration: none;
     display: inline-block;
-    padding: 0px 20px 0px 20px;
+    padding: 0px 20px;
     font-size: 15px;
     border-radius: 4px;
 }
@@ -191,11 +242,21 @@ header .overlay {
     height: 3px;
     background-color: #fff;
 }
+
+/*
+    Responsif untuk perangkat berukuran kecil.
+
+    Komponen:
+    ----------
+    layar-dalam     : Lebar konten dikurangi.
+    nav .menu ul    : Menu disembunyikan pada ukuran kecil.
+    tombol-menu     : Muncul pada tampilan kecil.
+*/
 @media screen and (max-width: 991.98px) {
     .layar-dalam {
         width: 90%;
     }
-    nav .menu ul{
+    nav .menu ul {
         display: none;
     }
     .tombol-menu {
@@ -203,7 +264,15 @@ header .overlay {
     }
 }
 
-/* About Us Section */
+/*
+    Bagian Tentang Kami yang menjelaskan informasi aplikasi/website.
+
+    Komponen:
+    ----------
+    #aboutus    : Kontainer section.
+    h2          : Judul section.
+    p           : Deskripsi teks.
+*/
 #aboutus {
     padding: 4rem 1rem;
     text-align: center;
@@ -215,43 +284,56 @@ header .overlay {
 }
 #aboutus p {
     font-size: 1.125rem;
-    color: #6b7280; /* Gray text */
+    color: #6b7280;
 }
 
-/* Contact Section */
+/*
+    Formulir Kontak untuk pengguna mengirim pesan atau pertanyaan.
+
+    Komponen:
+    ----------
+    #contact          : Kontainer section.
+    input, textarea   : Input user.
+    button            : Tombol kirim form.
+*/
 #contact {
     padding: 4rem 1rem;
-    background-color: #f3f4f6; /* Light gray background */
+    background-color: #f3f4f6;
     text-align: center;
 }
 #contact form {
     max-width: 600px;
     margin: 0 auto;
 }
-#contact input, #contact textarea {
+#contact input,
+#contact textarea {
     width: 100%;
     padding: 0.75rem;
     margin-bottom: 1rem;
-    border: 1px solid #d1d5db; /* Light gray border */
+    border: 1px solid #d1d5db;
     border-radius: 0.5rem;
 }
 #contact button {
-    background-color: #2563eb; /* Blue button */
-    color: #ffffff; /* White text */
+    background-color: #2563eb;
+    color: #ffffff;
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
     transition: background-color 0.3s ease;
 }
 #contact button:hover {
-    background-color: #1d4ed8; /* Darker blue on hover */
+    background-color: #1d4ed8;
 }
 
-/* Footer */
+/*
+    Footer halaman yang berisi informasi hak cipta.
+
+    Komponen:
+    ----------
+    footer    : Container footer dengan latar gelap dan teks putih.
+*/
 footer {
-    background-color: #1f2937; /* Dark gray background */
-    color: #ffffff; /* White text */
+    background-color: #1f2937;
+    color: #ffffff;
     text-align: center;
     padding: 1.5rem 1rem;
 }
-
-
